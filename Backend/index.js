@@ -12,7 +12,6 @@ app.use(express.json());
 
 app.use("/", require("./Routes/routes"));
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri =
   "mongodb+srv://" +
   process.env.DB_USER +
@@ -27,9 +26,6 @@ async function run() {
   await mongoose.connect(uri, clientOptions);
 
   await mongoose.connection.db.admin().command({ ping: 1 });
-
-  const allUsers = await Users.find({});
-  console.log(allUsers);
 
   console.log("Pinged your deployment. You successfully connected to MongoDB!");
 }
