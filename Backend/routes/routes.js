@@ -3,10 +3,15 @@ const routes = express.Router();
 
 const userController = require("../controllers/userController");
 const bookController = require("../controllers/bookController.js");
+const authController = require("../controllers/auth.Controller");
+
+const authMiddleware = require("../Middlewares/auth.Middleware");
 
 //felhasználó végpontok
 
 routes.post("/users", userController.RegUser);
+routes.post("/users/login", authController.login);
+routes.get("/users/me", [authMiddleware.auth], userController.GetUser);
 
 //könyvek végpontok
 
