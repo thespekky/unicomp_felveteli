@@ -17,7 +17,7 @@ exports.AddBook = async (req, res) => {
 exports.GetBooks = async (req, res) => {
   try {
     const books = await Books.find({});
-    res.status(201).send({ books: books });
+    res.status(200).send({ books: books });
   } catch (e) {
     res.status(400).send({ message: e.message });
   }
@@ -25,7 +25,7 @@ exports.GetBooks = async (req, res) => {
 exports.GetABook = async (req, res) => {
   try {
     const book = await Books.findById(req.params.id);
-    res.status(201).send({ book: book });
+    res.status(200).send({ book: book });
   } catch (e) {
     res.status(400).send({ message: e.message });
   }
@@ -43,7 +43,7 @@ exports.PatchABook = async (req, res) => {
       });
     });
     session.endSession();
-    res.status(201).send({ message: "Könyv frissitve" });
+    res.status(200).send({ message: "Könyv frissitve" });
   } catch (e) {
     res.status(400).send({ message: e.message });
   }
@@ -61,7 +61,7 @@ exports.DeleteABook = async (req, res) => {
       });
     });
     session.endSession();
-    res.status(201).send({ message: "Könyv törölve" });
+    res.status(200).send({ message: "Könyv törölve" });
   } catch (e) {
     res.status(400).send({ message: e.message });
   }

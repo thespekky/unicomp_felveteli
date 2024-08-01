@@ -18,7 +18,7 @@ exports.login = async (req, res) => {
         expiresIn: "20m",
       }
     );
-    return res.status(201).send({
+    return res.status(200).send({
       token: token,
       user: user,
     });
