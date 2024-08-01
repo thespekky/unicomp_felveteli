@@ -18,5 +18,7 @@ routes.get("/users/me", [authMiddleware.auth], userController.GetUser);
 routes.post("/books", bookController.AddBook);
 routes.get("/books", bookController.GetBooks);
 routes.get("/books/:id", bookController.GetABook);
+routes.patch("/books/:id", bookController.PatchABook);
+routes.delete("/books/:id", bookController.DeleteABook);
 
 module.exports = routes;
