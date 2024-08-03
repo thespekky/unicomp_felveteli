@@ -3,6 +3,7 @@ import { AuthProvider } from "./Components/AuthContext/AuthContext";
 import { AlertPRovider } from "./Components/Alert/alert.context";
 import Home from "./Components/Pages/Home/home.jsx";
 import Navbar from "./Components/Pages/Navbar/navbar.jsx";
+import Login from "./Components/Pages/Login/login.jsx";
 function App() {
   return (
     <>
@@ -11,6 +12,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/belepes" element={<Login />} />
           </Routes>
         </AlertPRovider>
       </AuthProvider>

@@ -36,14 +36,14 @@ export default function Navbar() {
               )}
             </ul>
             <ul className="navbar-nav mb-2 mb-lg-0">
-              {isLoggedIn ? (
+              {!isLoggedIn ? (
                 <CostumeLink to={"/belepes"} className="btn btn-primary">
                   Belépés
                 </CostumeLink>
               ) : (
                 <CostumeLink
                   to={"/kilepes"}
-                  onlcick={logout}
+                  onClick={logout}
                   className="btn btn-danger"
                 >
                   Kilépés
@@ -60,7 +60,7 @@ function CostumeLink({ to, children, ...props }) {
   const resolvedPath = useResolvedPath(to);
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
   return (
-    <li className={isActive ? "nav-item active" : "nav-item notactive"}>
+    <li className={isActive ? "nav-item active" : "nav-item"}>
       <Link className="nav-link" aria-current="page" to={to} {...props}>
         {children}
       </Link>

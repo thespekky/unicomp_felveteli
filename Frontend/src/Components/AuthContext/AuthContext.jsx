@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/");
+      console.log(isLoggedIn);
     }
   }, [isLoggedIn]);
 

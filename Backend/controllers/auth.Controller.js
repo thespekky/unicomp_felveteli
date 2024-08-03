@@ -7,7 +7,6 @@ exports.login = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
     });
-    console.log(user);
     if (!user) {
       return res.status(400).send({ message: "Nincs ilyen felhasználó" });
     }
