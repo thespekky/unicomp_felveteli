@@ -34,7 +34,6 @@ export default function Home() {
       <div style={{ textAlign: "center", padding: "3px" }}>
         Üdvözlöm a weboldalon
       </div>
-      <div>{isLoggedIn === true ? loggedUser.lastname : "no user"}</div>
       <Suspense fallback={<div>Töltés...</div>}>
         <div className="d-flex flex-row flex-wrap">
           {konyvek.map((konyv) => (

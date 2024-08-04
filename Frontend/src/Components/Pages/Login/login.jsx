@@ -47,6 +47,7 @@ export default function Login() {
         admin: data.user.admin,
         phonenumber: data.user.phonenumber,
         authtoken: data.token,
+        id: data.user._id,
       };
       login(user);
     }
@@ -59,24 +60,26 @@ export default function Login() {
           onSubmit={UserLogin}
           className="loginform w-50 border border-4 border-secondary rounded p-2 mb-2 bg-secondary-subtle "
         >
-          <div className="mb-3">
-            <label className="form-label">Email address</label>
+          <div className=" form-floating mb-3">
             <input
               name="email"
               type="email"
               className="form-control"
-              id="exampleInputEmail1"
+              id="floatingInput"
               aria-describedby="emailHelp"
+              placeholder="name@example.com"
             />
+            <label className="floatingInput">Email address</label>
           </div>
-          <div className="mb-3">
-            <label className="form-label">Password</label>
+          <div className="form-floating mb-3">
             <input
               name="password"
               type="password"
               className="form-control"
-              id="exampleInputPassword1"
+              id="floatingPassword"
+              placeholder="Password"
             />
+            <label className="floatingPassword">Password</label>
           </div>
           <button type="submit" className="btn btn-primary">
             Submit

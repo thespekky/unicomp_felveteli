@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
     email: "",
     admin: 0,
     phonenumber: "",
+    id: "",
   });
   useEffect(() => {
     if (cookies.get("userData")) {
@@ -23,6 +24,7 @@ export const AuthProvider = ({ children }) => {
         email: cookies.get("userData").email,
         admin: cookies.get("userData").admin,
         phonenumber: cookies.get("userData").phonenumber,
+        id: cookies.get("userData").id,
       });
     }
   }, []);
@@ -41,6 +43,7 @@ export const AuthProvider = ({ children }) => {
       email: datas.email,
       admin: datas.admin,
       phonenumber: datas.phonenumber,
+      id: datas.id,
     });
     setIsLoggedIn(true);
   };
@@ -54,6 +57,7 @@ export const AuthProvider = ({ children }) => {
         email: "",
         admin: 0,
         phonenumber: "",
+        id: "",
       });
 
       navigate("/");

@@ -9,6 +9,7 @@ const alertStyles = {
   position: "fixed",
   top: "120px",
   right: "10px",
+  zIndex: "9999",
 };
 const severityStyles = {
   success: {

@@ -4,6 +4,7 @@ import { AlertPRovider } from "./Components/Alert/alert.context";
 import Home from "./Components/Pages/Home/home.jsx";
 import Navbar from "./Components/Pages/Navbar/navbar.jsx";
 import Login from "./Components/Pages/Login/login.jsx";
+import Book from "./Components/Pages/Book/book.jsx";
 function App() {
   return (
     <>
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/belepes" element={<Login />} />
+            <Route path="/konyvek/:id" element={<Book />} />
           </Routes>
         </AlertPRovider>
       </AuthProvider>
