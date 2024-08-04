@@ -98,6 +98,7 @@ export default function Book() {
           className="form-select"
           aria-label="Default select example"
           name="szam"
+          style={{ marginBottom: "3px" }}
         >
           <option value="0" defaultValue={0}>
             Kérem válasszon rétékelést

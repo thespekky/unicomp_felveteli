@@ -34,7 +34,7 @@ export default function Login() {
     }
     const body = {
       email: formData.get("email"),
-      password: formData.get("password"), // CryptoJS.SHA1(formData.get("password")).toString(),
+      password: CryptoJS.SHA1(formData.get("password")).toString(),
     };
     const data = await LoginUser("/users/login", body);
     if (data.message) {
@@ -69,7 +69,7 @@ export default function Login() {
               aria-describedby="emailHelp"
               placeholder="name@example.com"
             />
-            <label className="floatingInput">Email address</label>
+            <label className="floatingInput">Email</label>
           </div>
           <div className="form-floating mb-3">
             <input
@@ -79,10 +79,18 @@ export default function Login() {
               id="floatingPassword"
               placeholder="Password"
             />
-            <label className="floatingPassword">Password</label>
+            <label className="floatingPassword">Jelszó</label>
           </div>
           <button type="submit" className="btn btn-primary">
-            Submit
+            Bejelentkezés
+          </button>
+          <button
+            type="button"
+            style={{ float: "right" }}
+            className="btn btn-primary"
+            onClick={() => navigate("/regisztralas")}
+          >
+            Regisztálás
           </button>
         </form>
       </div>
