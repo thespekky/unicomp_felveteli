@@ -23,3 +23,21 @@ export async function LoginUser(path, body) {
     return { message: e.message };
   }
 }
+export async function GetAllData(path) {
+  try {
+    const response = await fetch(
+      "http://localhost:" + import.meta.env.VITE_PORT + path,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    console.log(e);
+    return { message: e.message };
+  }
+}

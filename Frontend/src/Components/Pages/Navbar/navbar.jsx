@@ -41,11 +41,7 @@ export default function Navbar() {
                   Belépés
                 </CostumeLink>
               ) : (
-                <CostumeLink
-                  to={"/kilepes"}
-                  onClick={logout}
-                  className="btn btn-danger"
-                >
+                <CostumeLink onClick={logout} className="btn btn-danger">
                   Kilépés
                 </CostumeLink>
               )}

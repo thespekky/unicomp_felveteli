@@ -4,3 +4,11 @@
 .loginform {
   gap: 3px;
 }
+.konyvekcard {
+  @media (max-width: 768px) {
+    width: 100% !important;
+  }
+}
+.konyvekimage {
+  max-width: 400px;
+}
