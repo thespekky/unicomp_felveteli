@@ -33,9 +33,12 @@ export default function Navbar() {
                 <>
                   <CostumeLink to={"/ujkonyv"}>Új könyv</CostumeLink>
                   <CostumeLink to={"/felhasznalo"}>Felhasználó</CostumeLink>
+                  <CostumeLink to={"/ertekelesek"}>Értékelések</CostumeLink>
                 </>
               ) : (
-                <></>
+                <>
+                  <CostumeLink to={"/ertekelesek"}>Értékelések</CostumeLink>
+                </>
               )}
             </ul>
             <ul className="navbar-nav mb-2 mb-lg-0">
