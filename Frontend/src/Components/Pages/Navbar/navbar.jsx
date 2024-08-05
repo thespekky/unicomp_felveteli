@@ -30,7 +30,10 @@ export default function Navbar() {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <CostumeLink to={"/"}>Könyvek</CostumeLink>
               {isLoggedIn ? (
-                <CostumeLink to={"/felhasznalo"}>Felhasználó</CostumeLink>
+                <>
+                  <CostumeLink to={"/ujkonyv"}>Új könyv</CostumeLink>
+                  <CostumeLink to={"/felhasznalo"}>Felhasználó</CostumeLink>
+                </>
               ) : (
                 <></>
               )}
