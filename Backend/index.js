@@ -7,9 +7,10 @@ const Users = require("./Models/userModel");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 require("dotenv").config();
-app.use(cors());
+
 app.use(express.json());
 
+app.use(cors());
 app.use("/", require("./Routes/routes"));
 
 const uri =

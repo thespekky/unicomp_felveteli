@@ -6,6 +6,7 @@ import Navbar from "./Components/Pages/Navbar/navbar.jsx";
 import Login from "./Components/Pages/Login/login.jsx";
 import Book from "./Components/Pages/Book/book.jsx";
 import Reg from "./Components/Pages/Reg/reg.jsx";
+import User from "./Components/Pages/User/user.jsx";
 function App() {
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
             <Route path="/belepes" element={<Login />} />
             <Route path="/konyvek/:id" element={<Book />} />
             <Route path="/regisztralas" element={<Reg />} />
+            <Route path="/felhasznalo" element={<User />} />
           </Routes>
         </AlertPRovider>
       </AuthProvider>

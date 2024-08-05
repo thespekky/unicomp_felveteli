@@ -14,12 +14,11 @@ exports.RegUser = async (req, res) => {
 };
 exports.GetUser = async (req, res) => {
   try {
-    const findUser = await users.findOne({ email: req.body.email });
+    const findUser = await users.findOne({ email: req.user.email });
     if (findUser === null) {
       return res.status(400).send({ message: "Nem Létező email cím" });
     }
-    const user = new users(req.body);
-    res.status(200).send({ user: user, message: "Felhasználó létrehozva" });
+    res.status(200).send({ user: findUser, message: "Felhasználó létrehozva" });
   } catch (e) {
     res.status(400).send({ message: e.message });
   }

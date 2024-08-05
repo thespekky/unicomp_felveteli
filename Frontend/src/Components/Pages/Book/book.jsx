@@ -1,6 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext, Suspense } from "react";
-import { GetAData, GetAllData, PostData } from "../../FetchData/FetchData";
+import {
+  GetAData,
+  GetAllData,
+  PostData,
+  UpdateData,
+  DeleteData,
+} from "../../FetchData/FetchData";
 import AlertContext from "../../../Components/Alert/alert.context";
 import { Alert } from "../../../Components/Alert/Alert";
 import cover_photo from "../../../assets/cover_photo.jpg";
@@ -73,25 +79,111 @@ export default function Book() {
       showAlert(data.message, "danger");
     }
   }
+  async function UpdateBook(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    if (
+      formData.get("name").length == 0 ||
+      formData.get("description").length == 0 ||
+      formData.get("image").length == 0
+    ) {
+      showAlert("Nincs minden mező kitöltve", "warning");
+      return;
+    }
+    const body = {
+      name: formData.get("name"),
+      description: formData.get("description"),
+      image: formData.get("image"),
+    };
+    const data = await UpdateData("/books/" + id, body);
+    if (data.message == "Könyv frissitve") {
+      showAlert(data.message, "success");
+    } else {
+      showAlert(data.message, "danger");
+    }
+  }
 
   return (
     <>
       <Alert />
       <Suspense fallback={<div>Töltés...</div>}>
-        {
-          <div className="card konyvekcard" style={{ width: "100%" }}>
-            <img
-              src={cover_photo}
-              className="card-img-top konyvekimage"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title">{konyv.name}</h5>
-              <p className="card-text">{konyv.description}</p>
-              <p className="card-text">A könyv értékelése: {ertekeles}</p>
+        {loggedUser.admin ? (
+          <>
+            <form onSubmit={UpdateBook} className="loginform  ">
+              <div style={{ width: "100%" }}>
+                <img
+                  src={cover_photo}
+                  className="card-img-top konyvekimage"
+                  alt="..."
+                />
+                <div className="form-floating mb-3">
+                  <input
+                    name="name"
+                    type="text"
+                    className="form-control"
+                    id="floatingInput"
+                    defaultValue={konyv.name}
+                  />
+                  <label className="floatingInput">Név</label>
+                </div>
+                <div className="form-floating mb-3">
+                  <textarea
+                    name="description"
+                    type="text"
+                    className="form-control"
+                    id="floatingInputdescription"
+                    defaultValue={konyv.description}
+                  />
+                  <label className="floatingInputdescription">leírás</label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    name="image"
+                    type="text"
+                    className="form-control"
+                    id="floatingInput"
+                    defaultValue={konyv.image}
+                  />
+                  <label className="floatingInputimage">Kép neve</label>
+                </div>
+              </div>
+              <p className="card-text p-2">A könyv értékelése: {ertekeles}</p>
+              <button type="submit" className="btn btn-primary">
+                Módosítás
+              </button>
+              <button
+                type="button"
+                style={{ float: "right" }}
+                className="btn btn-primary btn-danger"
+                onClick={() => {
+                  let text = "Biztos hogy törölni akarod ezt a könyvet?";
+                  if (confirm(text) == true) {
+                    DeleteData("/books/" + id);
+                    navigate("/");
+                  }
+                }}
+              >
+                Törlés
+              </button>
+            </form>
+          </>
+        ) : (
+          <>
+            <div className="card konyvekcard" style={{ width: "100%" }}>
+              <img
+                src={cover_photo}
+                className="card-img-top konyvekimage"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">{konyv.name}</h5>
+
+                <p className="card-text">{konyv.description}</p>
+                <p className="card-text">A könyv értékelése: {ertekeles}</p>
+              </div>
             </div>
-          </div>
-        }
+          </>
+        )}
       </Suspense>
       <form onSubmit={UserReview} className="p-2">
         <select
@@ -101,7 +193,7 @@ export default function Book() {
           style={{ marginBottom: "3px" }}
         >
           <option value="0" defaultValue={0}>
-            Kérem válasszon rétékelést
+            Kérem válasszon értékelést
           </option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -109,7 +201,7 @@ export default function Book() {
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-        <div className="form-floating">
+        <div className="form-floating" style={{ marginBottom: "3px" }}>
           <textarea
             name="ertekeles"
             className="form-control"
@@ -119,10 +211,8 @@ export default function Book() {
           ></textarea>
           <label htmlFor="floatingTextarea2">Értékelés</label>
         </div>
-        <div className="mb-3"></div>
-        <div className="mb-3 form-check"></div>
         <button type="submit" className="btn btn-primary">
-          Submit
+          Értékelem
         </button>
       </form>
     </>
