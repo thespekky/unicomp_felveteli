@@ -4,12 +4,10 @@ import AlertContext from "../../Alert/alert.context";
 import { Alert } from "../../Alert/Alert";
 import Cookies from "universal-cookie";
 import { PostData } from "../../FetchData/FetchData";
-import { useAuth } from "../../AuthContext/AuthContext";
 const cookies = new Cookies();
 export default function NewBook() {
   const navigate = useNavigate();
   const [, setAlert] = useContext(AlertContext);
-  const { login } = useAuth();
   const showAlert = (text, type) => {
     setAlert({
       text,

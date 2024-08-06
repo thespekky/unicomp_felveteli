@@ -34,7 +34,7 @@ export default function Login() {
     }
     const body = {
       email: formData.get("email"),
-      password: CryptoJS.SHA1(formData.get("password")).toString(),
+      password: formData.get("password"),
     };
     const data = await LoginUser("/users/login", body);
     if (data.message) {

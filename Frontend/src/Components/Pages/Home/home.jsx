@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext, Suspense } from "react";
-import { useAuth } from "../../AuthContext/AuthContext";
 import { GetAllData } from "../../FetchData/FetchData";
 import AlertContext from "../../../Components/Alert/alert.context";
 import { Alert } from "../../../Components/Alert/Alert";
@@ -26,7 +25,6 @@ export default function Home() {
   useEffect(() => {
     getData();
   }, []);
-  const { isLoggedIn, loggedUser } = useAuth();
 
   return (
     <>

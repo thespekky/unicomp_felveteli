@@ -1,8 +1,5 @@
 import { Link, useResolvedPath, useMatch } from "react-router-dom";
 import { useAuth } from "../../AuthContext/AuthContext";
-import { useEffect } from "react";
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 export default function Navbar() {

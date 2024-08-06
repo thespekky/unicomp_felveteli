@@ -46,7 +46,7 @@ export default function Reg() {
     }
     const body = {
       email: formData.get("email"),
-      password: CryptoJS.SHA1(formData.get("password")).toString(),
+      password: formData.get("password"),
       lastname: formData.get("lastname"),
       firstname: formData.get("firstname"),
       phonenumber: formData.get("phonenumber"),
