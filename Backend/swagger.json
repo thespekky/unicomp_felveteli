@@ -1,0 +1,473 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API dokumentáció",
+    "version": "1.0.0",
+    "description": "API dokumentáció"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Regisztráció",
+        "description": "Felhasználó regisztrációja",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Felhasználó sikeresen regisztrálva"
+          },
+          "400": {
+            "description": "Hiba a regisztráció során"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Felhasználó bejelentkezése",
+        "description": "Felhasználó bejelentkezése email és jelszó segítségével",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Felhasználó email címe",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Felhasználó jelszava",
+                    "required": true
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sikeres bejelentkezés",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "Felhasználó token-je"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Hibás email vagy jelszó"
+          },
+          "500": {
+            "description": "Szerverhiba"
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "summary": "Saját felhasználó adatainak lekérdezése",
+        "description": "Saját felhasználó adatainak lekérdezése Bearer header segítségével",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Azonosító token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Felhasználó megtalálva",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Nincs ilyen felhasználó vagy nem jó a token"
+          },
+          "500": {
+            "description": "Szerverhiba"
+          }
+        }
+      }
+    },
+    "/books": {
+      "post": {
+        "summary": "Könyv hozzáadása",
+        "description": "Új könyv hozzáadása",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Könyv sikeresen hozzáadva"
+          },
+          "400": {
+            "description": "Hibás vagy hiányzó adatok"
+          },
+          "500": {
+            "description": "Belső kiszolgáló hiba"
+          }
+        }
+      },
+      "get": {
+        "summary": "Könyvek lekérése",
+        "description": "Az összes könyv lekérése",
+        "responses": {
+          "200": {
+            "description": "Könyvek sikeresen lekérdezve",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Hiba"
+          }
+        }
+      }
+    },
+
+    "/books/{id}": {
+      "patch": {
+        "summary": "Könyv frissítése",
+        "description": "Könyv frissítése azonosító alapján",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Könyv azonosítója",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Könyv sikeresen frissítve"
+          },
+          "400": {
+            "description": "Nincs ilyen könyv"
+          },
+          "500": {
+            "description": "Belső kiszolgáló hiba"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Könyv törlése",
+        "description": "Könyv törlése azonosító alapján",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Könyv azonosítója",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Könyv törölve"
+          },
+          "400": {
+            "description": "Nincs ilyen könyv"
+          },
+          "500": {
+            "description": "Belső kiszolgáló hiba"
+          }
+        }
+      }
+    },
+    "/books/{bookId}/reviews": {
+      "post": {
+        "summary": "Review hozzáadása",
+        "description": "Új review hozzáadása egy könyvhöz",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "Könyv azonosítója",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Azonosító token Bearer header segítségével",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Review"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Review sikeresen hozzáadva"
+          },
+          "400": {
+            "description": "Bookid hiba vagy Nincs ilyen könyv vagy Helytelen értékelés"
+          }
+        }
+      },
+      "get": {
+        "summary": "Review lekérése",
+        "description": "Review lekérése egy könyvhöz",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "Könyv azonosítója",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Review"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Hiba"
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "patch": {
+        "summary": "Review módosítása",
+        "description": "Review módosítása egy adott azonosítójú könyvhöz",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Review azonosítója",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Azonosító token Bearer header segítségével",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Review"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sikeres frissítés"
+          },
+          "400": {
+            "description": "Helytelen értékelés vagy Nincs ilyen review vagy Rossz felhasználó"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Review törlése",
+        "description": "Review törlése egy adott azonosítójú review-ért",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Review azonosítója",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Azonosító token Bearer header segítségével",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A review sikeresen törölve lett"
+          },
+          "400": {
+            "description": "Rossz felhasználó"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Book": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Könyv címe",
+            "required": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Könyv leírása",
+            "required": true
+          },
+          "image": {
+            "type": "string",
+            "description": "Könyv kép URL-je",
+            "required": true
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Felhasználó email-je",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "description": "Felhasználó jelszava",
+            "required": true
+          },
+          "lastname": {
+            "type": "string",
+            "description": "Felhasználó vezetéknéve",
+            "required": true
+          },
+          "firstname": {
+            "type": "string",
+            "description": "Felhasználó keresztneve",
+            "required": true
+          },
+          "admin": {
+            "type": "boolean",
+            "description": "Felhasználó admin e",
+            "required": true
+          },
+          "phonenumber": {
+            "type": "string",
+            "description": "Felhasználó telefonszáma",
+            "required": false
+          }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "integer",
+            "description": "Értékelés",
+            "required": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Megjegyzés",
+            "required": true
+          },
+          "bookId": {
+            "type": "string",
+            "description": "Könyv azonosítója",
+            "required": true
+          },
+          "userId": {
+            "type": "string",
+            "description": "Felhasználó azonosítója",
+            "required": true
+          }
+        }
+      }
+    }
+  }
+}

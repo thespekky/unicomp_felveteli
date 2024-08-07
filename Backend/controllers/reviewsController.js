@@ -7,6 +7,9 @@ exports.AddReview = async (req, res) => {
     if (req.params.bookid !== req.body.bookid) {
       return res.status(400).send({ message: "Bookid hiba" });
     }
+    if (req.body.rating > 5 || req.body.rating < 0) {
+      return res.status(400).send({ message: "Helytelen értékelés" });
+    }
     const book = await books.findById(req.params.bookid);
     if (book === null) {
       return res.status(400).send({ message: "Nincs ilyen könyv" });
@@ -38,6 +41,9 @@ exports.PatchReview = async (req, res) => {
     const review = await reviews.findById(req.params.id);
     if (review === null) {
       return res.status(400).send({ message: "Nincs ilyen review" });
+    }
+    if (req.body.user.rating > 5 || req.body.user.rating < 0) {
+      return res.status(400).send({ message: "Helytelen értékelés" });
     }
     const session = await mongoose.startSession();
     await session.withTransaction(async () => {

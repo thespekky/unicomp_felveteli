@@ -1,5 +1,11 @@
 const express = require("express");
 const routes = express.Router();
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc = require("swagger-jsdoc");
+require("dotenv").config();
+const swaggerDocument = require("../swagger.json");
+routes.use("/api-docs", swaggerUi.serve);
+routes.get("/api-docs", swaggerUi.setup(swaggerDocument));
 
 const userController = require("../controllers/userController");
 const bookController = require("../controllers/bookController.js");
